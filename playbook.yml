@@ -1,0 +1,37 @@
+- hosts: staging
+  become: yes
+
+  tasks:
+   - name: Print message
+     ansible.builtin.debug:
+       msg: "Hello world!!!"
+
+   - name: Check version linux
+     ansible.builtin.command:
+      cmd: cat /etc/os-release
+     register: os_result
+
+   - name: Show Linux version
+     ansible.builtin.debug:
+        msg: "{{ os_result.stdout }}"
+
+   - name: Check if git installed
+     ansible.builtin.command:
+       cmd: "git --version"
+     register: git_version
+     failed_when: false
+
+   - name: Install GIT
+     ansible.builtin.apt:
+      name: git
+      state: latest
+    
+   - name: Uninstall GIT
+     ansible.builtin.apt:
+      name: git
+      state: absent
+     
+
+      
+
+  
