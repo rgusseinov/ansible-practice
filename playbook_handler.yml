@@ -8,6 +8,11 @@
         state: latest
         update_cache: true
       
+    - name: Copy index.html
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /usr/share/nginx/html/index.html
+      
     - name: Update nginx config
       ansible.builtin.copy:
         src: files/nginx.conf
@@ -16,7 +21,7 @@
         - restart web services
 
   handlers:
-    - name: reload nginx
+    - name: Reload nginx
       ansible.builtin.service:
         name: nginx
         state: reloaded
