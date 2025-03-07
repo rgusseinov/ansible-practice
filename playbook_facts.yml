@@ -1,21 +1,16 @@
 - hosts: webservers
   become: yes
+  # gather_facts: no
 
   vars:
     conf_dir: /etc/nginx
     nginx_port: 80
 
-  tasks:
-    - name: Install nginx
-      ansible.builtin.apt:
-        name: nginx
-        state: latest
-        update_cache: true
-      
-    - name: Copy index.html
+  tasks:    
+    - name: Copy postgres config file to folder
       ansible.builtin.template:
-        src: templates/index.html
-        dest: "{{root_dir}}/index.html"
+        src: templates/postgresql.conf.j2
+        dest: /var/tmp/postgresql.conf
       
     - name: Update nginx config
       ansible.builtin.template:
