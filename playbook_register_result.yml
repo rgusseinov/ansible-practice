@@ -1,0 +1,17 @@
+- hosts: webservers
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: List down folders & files in home directory
+      ansible.builtin.shell: ls -l /home
+      register: home_dirs
+
+    - name: Output as string
+      ansible.builtin.debug:
+        var: home_dirs.stdout
+
+    - name: Output as array
+      ansible.builtin.debug:
+        var: home_dirs.stdout_lines
+
